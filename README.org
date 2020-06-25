@@ -1,5 +1,9 @@
 * Math Graphics Library built on CEPL
-** Tutorial
+** Install
 *** Clone Repository
 *** Install Via Quickload
-*** 
+** Examples
+*** Open file in Emacs and Slime
+*** C-c C-k to compile and load the file into slime
+*** Type (in-package :graphics) (cepl:repl) (run-loop)
+*** Expected Result is to see a triangle
