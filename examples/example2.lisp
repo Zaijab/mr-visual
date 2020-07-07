@@ -4,6 +4,7 @@
 (defparameter *array* nil)
 (defparameter *stream* nil)
 (defparameter *running* nil)
+(defparameter *loop-param* 0)
 
 ;; Lisp data for triangle vertices
 (defparameter *triangle-data*
@@ -17,8 +18,8 @@
   (color :vec4 :accessor col))
 
 ;; A GPU vertex shader using a Lisp syntax (see Varjo)
-(defun-g vert ((vert pos-col))
-  (values (rtg-math:v! (pos vert) 1.0)
+(defun-g vert ((vert pos-col) &uniform (offset :vec2))
+  (values (+ (rtg-math:v! offset 0 0) (rtg-math:v! (pos vert) 1.0))
           (col vert)))
 
 ;; A GPU fragment shader
@@ -36,7 +37,9 @@
   (livesupport:update-repl-link) ;; Keep the REPL responsive while running
   (clear)            ;; Clear the drawing buffer
   (map-g #'prog-1 *stream*) ;; Render data from GPU datastream
-  (swap))            ;; Display newly rendered buffer
+  (swap)
+  (map-g #'prog-1 *stream* :offset (rtg-math:v! (sin *loop-pos*)
+						(cos *loop-pos*))))            ;; Display newly rendered buffer
 
 
 (defun run-loop ()

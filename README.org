@@ -3,7 +3,11 @@
 *** Clone Repository
 *** Install Via Quickload
 ** Examples
-*** Open file in Emacs and Slime
-*** C-c C-k to compile and load the file into slime
-*** Type (in-package :graphics) (cepl:repl) (run-loop)
-*** Expected Result is to see a triangle
+*** Setup
+**** Open file in Emacs and Slime
+**** C-c C-k to compile and load the file into slime
+**** Type (in-package :mr-visual) (cepl:repl) (run-loop)
+*** Example 1
+The expected result is to see a multicolored triangle.
+*** Example 2
+The expected result is to see a moving triangle.
