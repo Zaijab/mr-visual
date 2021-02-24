@@ -12,6 +12,16 @@
          (list (rtg-math:v!    0   0.5 0) (rtg-math:v! 1 0 0 0))
          (list (rtg-math:v! -0.5 -0.36 0) (rtg-math:v! 0 0 1 0))))
 
+(defparameter *triangle-data*
+   (list (list (rtg-math:v!  0.5 -1.36 0) (rtg-math:v! 0 1 0 0))
+         (list (rtg-math:v!    0   0.5 0) (rtg-math:v! 1 0 0 0))
+         (list (rtg-math:v! -0.5 -0.36 0) (rtg-math:v! 0 0 1 0))))
+
+(cepl:push-g (list (list (rtg-math:v!  0.5 -1.36 1) (rtg-math:v! 0 1 0 0))
+		   (list (rtg-math:v!    0   0.5 0) (rtg-math:v! 1 0 0 0))
+		   (list (rtg-math:v! -0.5 -0.36 0) (rtg-math:v! 0 0 1 0))) *array*)
+(stop-loop)
+(run-loop)
 ;; A struct that works on gpu and cpu
 (defstruct-g pos-col
   (position :vec3 :accessor pos)
@@ -38,8 +48,9 @@
   (clear)            ;; Clear the drawing buffer
   (map-g #'prog-1 *stream*) ;; Render data from GPU datastream
   (swap)
-  (map-g #'prog-1 *stream* :offset (rtg-math:v! (sin *loop-pos*)
-						(cos *loop-pos*))))            ;; Display newly rendered buffer
+  (map-g #'prog-1 *stream* :offset (rtg-math:v! (sin *loop-param*)
+						(cos *loop-param*)))
+  (setq *loop-param* (+ 0.01 *loop-param*)))            ;; Display newly rendered buffer
 
 
 (defun run-loop ()
